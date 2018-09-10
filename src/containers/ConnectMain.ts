@@ -1,7 +1,6 @@
 import { StoreState } from "../store/StoreState";
 import { Props, Main } from "../components/Main";
 import { connect } from "react-redux";
-import { Dispatch, Action } from "redux";
 
 function mapStateToProps(state: StoreState, props: Props) {
   return {
@@ -11,7 +10,7 @@ function mapStateToProps(state: StoreState, props: Props) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<Action<string>>, props: Props) {
+function mapDispatchToProps(dispatch: any, props: Props) {
   return props;
 }
 

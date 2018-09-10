@@ -1,4 +1,4 @@
-import { LOGIN_FB_ERROR, LOGIN_FB_LOADING, LOGIN_FB_SUCCESS, STORE_TOKEN, GET_AUTH_LOADING, GET_AUTH_SUCCESS, LOGOUT_FB } from "../actions/auth";
+import { SOCIAL_LOGIN_ERROR, SOCIAL_LOGIN_LOADING, SOCIAL_LOGIN_SUCCESS, STORE_TOKEN, GET_AUTH_LOADING, GET_AUTH_SUCCESS, CLEAR_TOKEN } from "../actions/auth";
 
 const initialState = {
     isInitialized: false,
@@ -8,10 +8,10 @@ const initialState = {
 
 export default function auth(state = initialState, action: any): any {
     switch(action.type) {
-        case LOGIN_FB_ERROR: return state;
-        case LOGIN_FB_LOADING: return state;
-        case LOGIN_FB_SUCCESS: return state;
-        case LOGOUT_FB: return { ...state, token: '', expires: 0 }
+        case SOCIAL_LOGIN_ERROR: return state;
+        case SOCIAL_LOGIN_LOADING: return state;
+        case SOCIAL_LOGIN_SUCCESS: return state;
+        case CLEAR_TOKEN: return { ...state, token: '', expires: 0 }
         case STORE_TOKEN:
             return { ...state, token: action.token, expires: action.expires };
         case GET_AUTH_LOADING: return { ...state,  isInitialized: action.isInitialized };

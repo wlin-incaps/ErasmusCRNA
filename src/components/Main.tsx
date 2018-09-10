@@ -22,7 +22,7 @@ export function Main(props: Props) {
           (<ConnectLogin />)
       }
       <Button title='state' onPress={() => console.log(props.state)} />
-      <Button title='storage' onPress={async () => { console.log(await SafeStore.multiGet([SafeKey.FacebookToken, SafeKey.FacebookExpires])); }} />
+      <Button title='storage' onPress={async () => { console.log(await SafeStore.multiGet([SafeKey.AccessToken, SafeKey.AccessTokenExpires])); }} />
     </View>
   );
 }

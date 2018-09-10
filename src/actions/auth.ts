@@ -17,30 +17,29 @@ export function storeToken(token: string, expires: number) {
     }
 }
 
-export function getAuthLoading(): AnyAction {
+export function getAuthStoreLoading(): AnyAction {
     return {
         type: GET_AUTH_LOADING,
         isInitialized: false
     }
 }
 
-export function getAuthSuccess(): AnyAction {
+export function getAuthStoreSuccess(): AnyAction {
   return {
       type: GET_AUTH_SUCCESS,
       isInitialized: true
   }
 }
 
-export function getAuthentication() {
+export function getAuthStore() {
   return (dispatch: Dispatch) => {
-    dispatch(getAuthLoading());
+    dispatch(getAuthStoreLoading());
 
-    SafeStore.multiGet([ SafeKey.FacebookToken, SafeKey.FacebookExpires ])
+    SafeStore.multiGet([ SafeKey.AccessToken, SafeKey.AccessTokenExpires ])
       .then((values) => {
-        console.log(values);
         dispatch(storeToken(values[0][1], parseFloat(values[1][1])));
 
-        setTimeout(() => dispatch(getAuthSuccess()), 3000);
+        setTimeout(() => dispatch(getAuthStoreSuccess()), 3000);
       })
       .catch((error) => {
         console.log('Error during initialization');
@@ -52,59 +51,106 @@ export function getAuthentication() {
 /**
  * Facebook login
  */
-export const LOGIN_FB_ERROR = 'LOGIN_FB_ERROR';
-export const LOGIN_FB_LOADING = 'LOGIN_FB_LOADING';
-export const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
-export const LOGOUT_FB = 'LOGOUT_FB';
+export const SOCIAL_LOGIN_ERROR = 'SOCIAL_LOGIN_ERROR';
+export const SOCIAL_LOGIN_LOADING = 'SOCIAL_LOGIN_LOADING';
+export const SOCIAL_LOGIN_SUCCESS = 'SOCIAL_LOGIN_SUCCESS';
+export const CLEAR_TOKEN = 'SOCIAL_LOGOUT';
+export enum LoginType {
+    Facebook = 'facebook',
+    Google = 'google'
+}
 
-export function loginFacebookError(): AnyAction {
+export function socialLoginError(): AnyAction {
     return {
-        type: LOGIN_FB_ERROR
+        type: SOCIAL_LOGIN_ERROR
     }
 }
 
-export function loginFacebookLoading(): AnyAction {
+export function socialLoginLoading(): AnyAction {
     return {
-        type: LOGIN_FB_LOADING
+        type: SOCIAL_LOGIN_LOADING
     }
 }
 
-export function loginFacebookSuccess(): AnyAction {
+export function socialLoginSuccess(): AnyAction {
     return {
-        type: LOGIN_FB_SUCCESS
+        type: SOCIAL_LOGIN_SUCCESS
     }
 }
 
-export function loginFacebook() {
+export function socialLogin(loginType: LoginType) {
     return async (dispatch: Dispatch) => {
-        dispatch(loginFacebookLoading());
+        dispatch(socialLoginLoading());
 
         try {
-            const{ type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync('268055910349027', {
-                permissions: ['public_profile', 'email']
-            });
+            let outcome = '', accessToken = '', tokenExpires = 0;
+            if(loginType === LoginType.Facebook) {
+                const { type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync('268055910349027', {
+                    permissions: ['public_profile', 'email']
+                });
 
-            if(type === 'success' && token && expires) {
-                SafeStore.multiSet([[SafeKey.FacebookToken, token], [SafeKey.FacebookExpires, '' + expires]]);
-                dispatch(storeToken(token, expires));
+                outcome = type;
+                accessToken = token? token : '';
+                tokenExpires = expires? expires : 0;
+            }
+            else if(loginType === LoginType.Google) {
+                const iosClientId = '1065816006389-gut8n5m9g1uagi1t521votb3anelibmc.apps.googleusercontent.com';
+                const androidClientId = '1065816006389-82ftic1p5kje35be978gifc0c44qdsgn.apps.googleusercontent.com';
+                const result = await Expo.Google.logInAsync({
+                    iosClientId: iosClientId,
+                    androidClientId: androidClientId,
+                    scopes: ['profile', 'email'],
+                });
+
+                outcome = result.type;
+                accessToken = result.type === 'success'? result.accessToken : '';
+                console.log('result');
+                console.log(result);
             }
 
-            const res = await fetch(`https://graph.facebook.com/me?fields=first_name,last_name,middle_name,name,email&access_token=${token}`);
-            let response = res.json();
-            console.log(JSON.stringify(response));
+            if(outcome === 'success') {
+                SafeStore.multiSet([[SafeKey.AccessToken, accessToken], [SafeKey.AccessTokenExpires, '' + tokenExpires]]);
+                dispatch(storeToken(accessToken, tokenExpires));
 
-            dispatch(loginFacebookSuccess());
+                //use to get info from API
+                let res:(Response | undefined);
+                if(loginType === LoginType.Facebook) {
+                    res = await fetch(`https://graph.facebook.com/me?fields=first_name,last_name,middle_name,name,email&access_token=${accessToken}`);
+                }
+                else if(loginType === LoginType.Google) {
+                    res = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+                        headers: { Authorization: `Bearer ${accessToken}`},
+                    });
+                }
+
+                if(res) {
+                    const response = await res.json();
+                    console.log(JSON.stringify(response));
+                    dispatch(socialLoginSuccess());
+                }
+            }
+            else {
+
+            }
         }
         catch(error) {
             console.log('Facebook login error');
             console.log(error);
-            dispatch(loginFacebookError());
+            dispatch(socialLoginError());
         }
     }
 }
 
-export function logoutFacebook() {
+export function clearToken() {
     return {
-        type: LOGOUT_FB
+        type: CLEAR_TOKEN
+    }
+}
+
+export function logout() {
+    return async (dispatch: Dispatch) => {
+        SafeStore.multiDelete(['fb_token', 'fb_expires']);
+        SafeStore.multiDelete([SafeKey.AccessToken, SafeKey.AccessTokenExpires]);
+        dispatch(clearToken());
     }
 }

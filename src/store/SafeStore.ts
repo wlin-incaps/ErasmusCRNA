@@ -2,8 +2,8 @@ import { SecureStore } from 'expo';
 const storePrefix = 'erasmus_safe_';
 
 export enum SafeKey {
-  FacebookToken = 'fb_token',
-  FacebookExpires = 'fb_expires'
+  AccessToken = 'access_token',
+  AccessTokenExpires = 'access_token_expires'
 }
 
 export const SafeStore = {

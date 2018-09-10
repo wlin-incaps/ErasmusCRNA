@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-interface Props {
-
+export interface Props {
+  onLogoutClicked?: () => void;
 }
 
-export default function Home(props: Props) {
+export function Home(props: Props) {
   return (
     <View>
       <Text>Home</Text>
+      <Button title="Logout" onPress={() => { if(props.onLogoutClicked) { props.onLogoutClicked() } }} />
     </View>
   );
 }

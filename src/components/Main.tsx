@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { View, Text, Button } from 'react-native';
-import Login from './Login';
+import { View, Button } from 'react-native';
 import { StoreState } from '../store/StoreState';
 import ConnectSplash from '../containers/ConnectSplash';
 import ConnectLogin from '../containers/ConnectLogin';
-import { LocalStorage, LocalKey } from '../store/LocalStorage';
-import Home from './Home';
+import { SafeKey, SafeStore } from '../store/SafeStore';
+import ConnectHome from '../containers/ConnectHome';
 
 export interface Props {
   isInitialized?: boolean;
@@ -19,11 +18,11 @@ export function Main(props: Props) {
       {!props.isInitialized?
         (<ConnectSplash />) :
         props.isAuthenticated?
-          (<Home />) :
+          (<ConnectHome />) :
           (<ConnectLogin />)
       }
       <Button title='state' onPress={() => console.log(props.state)} />
-      <Button title='storage' onPress={async () => console.log(await LocalStorage.getAll())} />
+      <Button title='storage' onPress={async () => { console.log(await SafeStore.multiGet([SafeKey.FacebookToken, SafeKey.FacebookExpires])); }} />
     </View>
   );
 }

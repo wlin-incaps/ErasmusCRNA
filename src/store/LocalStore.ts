@@ -1,18 +1,16 @@
 import { AsyncStorage } from "react-native";
 
-const storePrefix = '@Erasmus:';
+const storePrefix = 'erasmus_';
 
 export enum LocalKey {
-  FacebookToken = 'facebook_token',
-  FacebookExpires = 'facebook_expires'
 }
 
-export const LocalStorage = {
+export const LocalStore = {
   getItem: (key: string) => {
     return AsyncStorage.getItem(storePrefix + key);
   },
   setItem: (key: string, value: string) => {
-    value = value? '' + value : '';
+    value = value? value : '';
     return AsyncStorage.setItem(storePrefix + key, value);
   },
   multiGet: (keys: string[]) => {
@@ -22,22 +20,24 @@ export const LocalStorage = {
     });
     return AsyncStorage.multiGet(clone);
   },
-  multiSet: (keyValuePairs: Array<string[]>) => {
+  multiSet: async (keyValuePairs: Array<string[]>) => {
     let clone = keyValuePairs.slice();
-    clone.forEach((item) => {
-      item[0] = storePrefix + item[0];
-      item[1] = item[1]? '' + item[1] : '';
-    });
+    for(const pair of clone) {
+      pair[0] = storePrefix + pair[0];
+    }
     return AsyncStorage.multiSet(clone);
   },
   getAll: async () => {
     try{
       let keys = await AsyncStorage.getAllKeys();
+      keys = keys.filter((item) => {
+        item.indexOf(storePrefix) === 0;
+      });
       let values = await AsyncStorage.multiGet(keys);
       return values;
     }
     catch(error) {
-
+      throw error;
     }
   },
   clear: async () => {
@@ -49,7 +49,7 @@ export const LocalStorage = {
       return AsyncStorage.multiRemove(keys);
     }
     catch(error) {
-      
+      throw error;
     }
   }
 }

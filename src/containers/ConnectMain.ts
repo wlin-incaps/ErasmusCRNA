@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 function mapStateToProps(state: StoreState, props: Props) {
   return {
-    isInitialized: state.init.isInitialized,
+    isInitialized: state.auth.isInitialized,
     isAuthenticated: state.auth.token? true : false,
     state: state
   };

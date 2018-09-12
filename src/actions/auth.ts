@@ -1,6 +1,7 @@
 import { AnyAction, Dispatch } from "redux";
 import * as Expo from 'expo';
 import { SafeKey, SafeStore } from "../store/SafeStore";
+import NavigationService from "../navigation/NavigationService";
 
 /**
  * Initial authentication state
@@ -37,13 +38,19 @@ export function getAuthStore() {
 
     SafeStore.multiGet([ SafeKey.AccessToken, SafeKey.AccessTokenExpires ])
       .then((values) => {
-        dispatch(storeToken(values[0][1], parseFloat(values[1][1])));
-
-        setTimeout(() => dispatch(getAuthStoreSuccess()), 3000);
+          if(values[0][1]) {
+            NavigationService.navigate('app', {});
+          }
+          else {
+            NavigationService.navigate('login', {});
+          }
+          
+          dispatch(storeToken(values[0][1], parseFloat(values[1][1])));
+          dispatch(getAuthStoreSuccess());
+        
       })
       .catch((error) => {
-        console.log('Error during initialization');
-        console.log(error);
+        NavigationService.navigate('login', {});
       });
   }
 }
@@ -127,6 +134,7 @@ export function socialLogin(loginType: LoginType) {
                     const response = await res.json();
                     console.log(JSON.stringify(response));
                     dispatch(socialLoginSuccess());
+                    NavigationService.navigate('app', {});
                 }
             }
             else {
@@ -149,8 +157,9 @@ export function clearToken() {
 
 export function logout() {
     return async (dispatch: Dispatch) => {
-        SafeStore.multiDelete(['fb_token', 'fb_expires']);
         SafeStore.multiDelete([SafeKey.AccessToken, SafeKey.AccessTokenExpires]);
         dispatch(clearToken());
+
+        NavigationService.navigate('login', {});
     }
 }

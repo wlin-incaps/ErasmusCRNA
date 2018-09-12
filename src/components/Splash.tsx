@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
+import styles from '../styles/styles';
 
 export interface Props {
   onDidMount?: () => void;
@@ -18,9 +19,8 @@ export class Splash extends React.Component<Props> {
 
   render() {
     return (
-      <View>
-        <Text>Loading...</Text>
-        <Button title='fetch' onPress={() => this.props.onDidMount ? this.props.onDidMount(): null} />
+      <View style={styles.container}>
+        <Text>Getting Authentication...</Text>
       </View>
     );
   }

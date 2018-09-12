@@ -1,8 +1,7 @@
 import { StoreState } from "../store/StoreState";
-import { Props, Main } from "../components/Main";
 import { connect } from "react-redux";
-import { socialLogin, storeToken, LoginType } from "../actions/auth";
-import Login from "../components/Login";
+import { socialLogin, LoginType } from "../actions/auth";
+import Login, { Props } from "../components/Login";
 
 function mapStateToProps(state: StoreState, props: Props) {
   return props;

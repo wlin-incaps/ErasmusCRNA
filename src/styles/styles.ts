@@ -11,13 +11,17 @@ export default StyleSheet.create({
     paddingTop: Constants.statusBarHeight
   },
   loginTop: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#000'
   },
   loginBottom: {
-    flex: 1,
+    flex: 2,
+    flexDirection: 'column',
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center'
+  },
+  loginFacebook: {
+    paddingBottom: 20,
   }
 });

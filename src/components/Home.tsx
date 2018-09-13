@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import NavigationService from '../navigation/NavigationService';
-import styles from '../styles/styles';
+import { Button } from 'react-native';
+import { HeaderView } from './HeaderView';
 
 export interface Props {
   onLogoutClicked?: () => void;
@@ -9,10 +8,8 @@ export interface Props {
 
 export function Home(props: Props) {
   return (
-    <View style={styles.containerOffset}>
-      <Text>Home</Text>
-      <Button title="Toggle Drawer" onPress={() => { NavigationService.toggleDrawer(); }} />
+    <HeaderView>
       <Button title="Logout" onPress={() => { if(props.onLogoutClicked) { props.onLogoutClicked() } }} />
-    </View>
+    </HeaderView>
   );
 }

@@ -10,6 +10,13 @@ const AppDrawer = createDrawerNavigator(
   {
     Home: ConnectHome,
     Profile: Profile
+  },
+  {
+    drawerBackgroundColor: '#000',
+    contentOptions: {
+      labelStyle: { color: '#fff' },
+      activeBackgroundColor: '#555'
+    }
   }
 );
 

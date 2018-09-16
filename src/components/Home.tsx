@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Button } from 'react-native';
-import { HeaderView } from './HeaderView';
+import { Button, View, Text, ScrollView } from 'react-native';
+import styles from '../styles/styles';
+import { EntityCarousel } from './EntityCarousel';
 
 export interface Props {
   onLogoutClicked?: () => void;
@@ -8,8 +9,11 @@ export interface Props {
 
 export function Home(props: Props) {
   return (
-    <HeaderView>
+    <ScrollView style={styles.container}>
+      <EntityCarousel title='Collections'/>
+      <EntityCarousel title='People'/>
+      <EntityCarousel title='Stuff'/>
       <Button title="Logout" onPress={() => { if(props.onLogoutClicked) { props.onLogoutClicked() } }} />
-    </HeaderView>
+    </ScrollView>
   );
 }

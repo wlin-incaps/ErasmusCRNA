@@ -1,15 +1,14 @@
 import * as React from 'react';
+import { View, Text } from 'react-native';
 import styles from '../styles/styles';
-import { View } from 'react-native';
-import { EntityGrid } from './EntityGrid';
 
 export interface Props {
 }
 
-export function Profile(props: Props) {
+export function EntityList(props: Props) {
   return (
     <View style={styles.container}>
-      <EntityGrid title='Friends' />
+      <Text>Hello World</Text>
     </View>
   );
 }

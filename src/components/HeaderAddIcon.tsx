@@ -36,43 +36,45 @@ export class HeaderAddIcon extends React.Component<Props, State> {
   async openContentModal() {
     try{
       const url = await Clipboard.getString();
-      const metaMap = await utils.getMicrodataFromUrl(url);
-      if(metaMap.og) {
-        const response:any = await fetch(metaMap.og.image);
-        const blob = await response.blob();
-        const dataURL = await utils.blobToDataURL(blob);
-        this.setState({
-          modalVisible: true,
-          createContent: {
-            ...this.state.createContent,
-            entity: metaMap.og.site_name,
-            title: metaMap.og.title,
-            description: metaMap.og.description,
-            imageData: dataURL,
-            url: url
-          }
-        });
-      }
-      else if(metaMap.twitter) {
-        const response:any = await fetch(metaMap.twitter['image:src']);
-        const blob = await response.blob();
-        const dataURL = await utils.blobToDataURL(blob);
-        this.setState({
-          modalVisible: true,
-          createContent: {
-            ...this.state.createContent,
-            entity: metaMap.twitter.site,
-            title: metaMap.twitter.title,
-            description: metaMap.twitter.description,
-            imageData: dataURL,
-            url: url
-          }
-        });
-      }
-      else {
-        this.setState({
-          modalVisible: true
-        });
+      if(url) {
+        const metaMap = await utils.getMicrodataFromUrl(url);
+        if(metaMap.og) {
+          const response:any = await fetch(metaMap.og.image);
+          const blob = await response.blob();
+          const dataURL = await utils.blobToDataURL(blob);
+          this.setState({
+            modalVisible: true,
+            createContent: {
+              ...this.state.createContent,
+              entity: metaMap.og.site_name,
+              title: metaMap.og.title,
+              description: metaMap.og.description,
+              imageData: dataURL,
+              url: url
+            }
+          });
+        }
+        else if(metaMap.twitter) {
+          const response:any = await fetch(metaMap.twitter['image:src']);
+          const blob = await response.blob();
+          const dataURL = await utils.blobToDataURL(blob);
+          this.setState({
+            modalVisible: true,
+            createContent: {
+              ...this.state.createContent,
+              entity: metaMap.twitter.site,
+              title: metaMap.twitter.title,
+              description: metaMap.twitter.description,
+              imageData: dataURL,
+              url: url
+            }
+          });
+        }
+        else {
+          this.setState({
+            modalVisible: true
+          });
+        }
       }
     }
     catch(err) {

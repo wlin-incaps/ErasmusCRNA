@@ -102,10 +102,14 @@ export function socialLogin(loginType: LoginType) {
             }
             else if(loginType === LoginType.Google) {
                 const iosClientId = '1065816006389-gut8n5m9g1uagi1t521votb3anelibmc.apps.googleusercontent.com';
+                const iosStandaloneAppClientId = '1065816006389-6m1v54f9tk41ak10rnrtqpvboi01etin.apps.googleusercontent.com';
                 const androidClientId = '1065816006389-82ftic1p5kje35be978gifc0c44qdsgn.apps.googleusercontent.com';
+                const androidStandaloneAppClientId = '1065816006389-l8cavjm707bh5mivajjbmahdmpgs7usa.apps.googleusercontent.com';
                 const result = await Expo.Google.logInAsync({
                     iosClientId: iosClientId,
                     androidClientId: androidClientId,
+                    androidStandaloneAppClientId: androidStandaloneAppClientId,
+                    iosStandaloneAppClientId: iosStandaloneAppClientId,
                     scopes: ['profile', 'email'],
                 });
 

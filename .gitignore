@@ -3,6 +3,7 @@
 # expo
 .expo/
 app.json
+**/keys.ts
 
 # dependencies
 /node_modules

@@ -2,6 +2,7 @@ import { AnyAction, Dispatch } from "redux";
 import * as Expo from 'expo';
 import { SafeKey, SafeStore } from "../store/SafeStore";
 import NavigationService from "../navigation/NavigationService";
+import keys from "../common/keys";
 
 /**
  * Initial authentication state
@@ -92,7 +93,7 @@ export function socialLogin(loginType: LoginType) {
         try {
             let outcome = '', accessToken = '', tokenExpires = 0;
             if(loginType === LoginType.Facebook) {
-                const { type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync('268055910349027', {
+                const { type, token, expires } = await Expo.Facebook.logInWithReadPermissionsAsync(keys.facebookAppId, {
                     permissions: ['public_profile', 'email']
                 });
 
@@ -101,10 +102,10 @@ export function socialLogin(loginType: LoginType) {
                 tokenExpires = expires? expires : 0;
             }
             else if(loginType === LoginType.Google) {
-                const iosClientId = '1065816006389-gut8n5m9g1uagi1t521votb3anelibmc.apps.googleusercontent.com';
-                const iosStandaloneAppClientId = '1065816006389-6m1v54f9tk41ak10rnrtqpvboi01etin.apps.googleusercontent.com';
-                const androidClientId = '1065816006389-82ftic1p5kje35be978gifc0c44qdsgn.apps.googleusercontent.com';
-                const androidStandaloneAppClientId = '1065816006389-l8cavjm707bh5mivajjbmahdmpgs7usa.apps.googleusercontent.com';
+                const iosClientId = keys.iosClientId;
+                const iosStandaloneAppClientId = keys.iosStandaloneAppClientId;
+                const androidClientId = keys.androidClientId;
+                const androidStandaloneAppClientId = keys.androidStandaloneAppClientId;
                 const result = await Expo.Google.logInAsync({
                     iosClientId: iosClientId,
                     androidClientId: androidClientId,

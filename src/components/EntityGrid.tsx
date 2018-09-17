@@ -71,7 +71,7 @@ export class EntityGrid extends React.Component<Props, State> {
 
     this.state = {
       grid: newGrid
-    }
+    };
   }
 
   render() {

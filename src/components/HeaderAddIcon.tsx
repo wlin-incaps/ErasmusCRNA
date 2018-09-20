@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Clipboard, Modal, Text } from 'react-native';
 import { Icon, Card, Button } from 'react-native-elements';
-import styles from '../styles/styles';
+import styles, { common } from '../styles/styles';
 import utils from '../common/utils';
 
 export interface Props {
@@ -92,7 +92,7 @@ export class HeaderAddIcon extends React.Component<Props, State> {
   render() {
     return (
       <View>
-        <Icon name="add" color="#fff" underlayColor="#000" onPress={() => { this.openContentModal(); }} />
+        <Icon name="add" color="#fff" underlayColor={common.colors.logoBack} onPress={() => { this.openContentModal(); }} />
         <Modal
           animationType="fade"
           transparent={true}

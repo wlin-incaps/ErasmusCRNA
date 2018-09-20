@@ -1,4 +1,5 @@
 import { SOCIAL_LOGIN_ERROR, SOCIAL_LOGIN_LOADING, SOCIAL_LOGIN_SUCCESS, STORE_TOKEN, GET_AUTH_LOADING, GET_AUTH_SUCCESS, CLEAR_TOKEN } from "../actions/auth";
+import { AnyAction } from "redux";
 
 const initialState = {
     isInitialized: false,
@@ -6,7 +7,7 @@ const initialState = {
     expires: 0
 }
 
-export default function auth(state = initialState, action: any): any {
+export default function auth(state = initialState, action: AnyAction): any {
     switch(action.type) {
         case SOCIAL_LOGIN_ERROR: return state;
         case SOCIAL_LOGIN_LOADING: return state;

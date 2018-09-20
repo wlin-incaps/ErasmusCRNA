@@ -2,12 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import auth from './reducers/auth';
+import assets from './reducers/assets';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import AppRoot from './navigation/AppRoot';
 import styles from './styles/styles';
+import ConnectAppRoot from './containers/ConnectAppRoot';
 
-const rootReducer = combineReducers({auth});
+const rootReducer = combineReducers({auth, assets});
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends React.Component {
@@ -15,7 +16,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <AppRoot />
+          <ConnectAppRoot />
         </View>
       </Provider>
     );

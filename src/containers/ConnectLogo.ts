@@ -1,21 +1,14 @@
 import { StoreState } from "../store/StoreState";
 import { connect } from "react-redux";
 import { socialLogin, LoginType } from "../actions/auth";
-import Login, { Props } from "../components/Login";
+import { Props, Logo } from "../components/Logo";
 
 function mapStateToProps(state: StoreState, props: Props) {
   return { hasFonts: state.assets.hasFonts };
 }
 
 function mapDispatchToProps(dispatch: any, props: Props) {
-  return {
-    onFacebookClicked: () => {
-      dispatch(socialLogin(LoginType.Facebook));
-    },
-    onGoogleClicked: () => {
-      dispatch(socialLogin(LoginType.Google));
-    }
-  };
+  return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Logo);

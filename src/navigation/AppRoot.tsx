@@ -6,23 +6,25 @@ import * as React from 'react';
 import NavigationService from "./NavigationService";
 import { Profile } from "../components/Profile";
 import { Icon } from "react-native-elements";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { HeaderAddIcon } from "../components/HeaderAddIcon";
-import { WebBrowser } from "expo";
+import { WebBrowser, Font } from "expo";
+import { common } from "../styles/styles";
+import ConnectLogo from "../containers/ConnectLogo";
 
 const AppStack = createStackNavigator(
   {
     Main: {
       screen: ConnectHome,
       navigationOptions: {
-        title: 'Home',
-        headerLeft: <Icon name="menu" color="#fff" underlayColor="#000" onPress={() => { NavigationService.toggleDrawer(); }} />,
+        headerTitle: <ConnectLogo fontSize={20} />,
+        headerLeft: <Icon name="menu" color="#fff" underlayColor={common.colors.logoBack} onPress={() => { NavigationService.toggleDrawer(); }} />,
         headerRight:
           (<View style={{ flexDirection: 'row' }}>
-            <Icon name="open-in-browser" color="#fff" underlayColor="#000" onPress={async () => { const result = await WebBrowser.openBrowserAsync('https://google.com'); }} />
+            <Icon name="open-in-browser" color="#fff" underlayColor={common.colors.logoBack} onPress={async () => { const result = await WebBrowser.openBrowserAsync('https://google.com'); }} />
             <HeaderAddIcon />
           </View>),
-        headerStyle: { backgroundColor: '#000' },
+        headerStyle: { backgroundColor: common.colors.logoBack },
         headerTitleStyle: { color: '#fff' }
       }
     }
@@ -38,13 +40,13 @@ const ProfileStack = createStackNavigator(
       screen: Profile,
       navigationOptions: {
         title: 'Profile',
-        headerLeft: <Icon name="menu" color="#fff" underlayColor="#000" onPress={() => { NavigationService.toggleDrawer(); }} />,
+        headerLeft: <Icon name="menu" color="#fff" underlayColor={common.colors.logoBack} onPress={() => { NavigationService.toggleDrawer(); }} />,
         headerRight:
           (<View style={{ flexDirection: 'row' }}>
-            <Icon name="open-in-browser" color="#fff" underlayColor="#000" onPress={() => { }} />
+            <Icon name="open-in-browser" color="#fff" underlayColor={common.colors.logoBack} onPress={() => { }} />
             <HeaderAddIcon />
           </View>),
-        headerStyle: { backgroundColor: '#000' },
+        headerStyle: { backgroundColor: common.colors.logoBack },
         headerTitleStyle: { color: '#fff' }
       }
     }
@@ -60,10 +62,10 @@ const AppDrawer = createDrawerNavigator(
     Profile: ProfileStack
   },
   {
-    drawerBackgroundColor: '#000',
+    drawerBackgroundColor: common.colors.logoBack,
     contentOptions: {
       labelStyle: { color: '#fff' },
-      activeBackgroundColor: '#555'
+      activeBackgroundColor: common.colors.logoPrimary
     }
   }
 );
@@ -79,8 +81,31 @@ const RootNavigator = createSwitchNavigator(
   }
 );
 
-export default function() {
-  return (
-    <RootNavigator ref={(navigatorRef:any) => { NavigationService.setTopLevelNavigator(navigatorRef); }}/>
-  );
+export interface Props {
+  hasFonts?: boolean;
+  setFontsLoaded?: (hasFonts: boolean) => void;
+}
+
+export class AppRoot extends React.Component<Props> {
+  async componentDidMount() {
+    try{
+      let fonts:any = {};
+      fonts[common.fonts.serif] = require('../assets/fonts/SourceSerifPro-Regular.ttf');
+      fonts[common.fonts.sans] = require('../assets/fonts/Oxygen-Regular.ttf');
+      await Font.loadAsync(fonts);
+
+      if(this.props.setFontsLoaded) { this.props.setFontsLoaded(true); }
+    }
+    catch(err) {
+      console.log('Error while loading fonts');
+      console.log(err);
+      if(this.props.setFontsLoaded) { this.props.setFontsLoaded(false); }
+    }
+  }
+
+  render() {
+    return (
+      <RootNavigator ref={(navigatorRef:any) => { NavigationService.setTopLevelNavigator(navigatorRef); }}/>
+    );
+  }
 }

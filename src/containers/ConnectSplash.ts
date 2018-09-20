@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getAuthStore } from "../actions/auth";
 
 function mapStateToProps(state: StoreState, props: Props) {
-  return props;
+  return {};
 }
 
 function mapDispatchToProps(dispatch: any, props: Props) {

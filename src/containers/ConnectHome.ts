@@ -5,7 +5,7 @@ import { Home } from "../components/Home";
 import { logout } from "../actions/auth";
 
 function mapStateToProps(state: StoreState, props: Props) {
-  return props;
+  return {};
 }
 
 function mapDispatchToProps(dispatch: any, props: Props) {

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import styles from '../styles/styles';
 
 export interface Props {
-  onDidMount?: () => void;
+  onDidMount: () => void;
 }
 
 export class Splash extends React.Component<Props> {
@@ -12,9 +12,7 @@ export class Splash extends React.Component<Props> {
   }
 
   componentDidMount() {
-    if(this.props.onDidMount) {
-      this.props.onDidMount();
-    }
+    this.props.onDidMount();
   }
 
   render() {

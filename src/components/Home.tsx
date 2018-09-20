@@ -4,7 +4,7 @@ import styles from '../styles/styles';
 import { EntityCarousel } from './EntityCarousel';
 
 export interface Props {
-  onLogoutClicked?: () => void;
+  onLogoutClicked: () => void;
 }
 
 export function Home(props: Props) {
@@ -13,7 +13,7 @@ export function Home(props: Props) {
       <EntityCarousel title='Collections'/>
       <EntityCarousel title='People'/>
       <EntityCarousel title='Stuff'/>
-      <Button title="Logout" onPress={() => { if(props.onLogoutClicked) { props.onLogoutClicked() } }} />
+      <Button title="Logout" onPress={() => { props.onLogoutClicked() }} />
     </ScrollView>
   );
 }

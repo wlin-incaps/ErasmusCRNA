@@ -13,7 +13,7 @@ export function Home(props: Props) {
       <EntityCarousel title='Collections'/>
       <EntityCarousel title='People'/>
       <EntityCarousel title='Stuff'/>
-      <Button title="Logout" onPress={() => { props.onLogoutClicked() }} />
+      <Button title="Logout" onPress={props.onLogoutClicked} />
     </ScrollView>
   );
 }

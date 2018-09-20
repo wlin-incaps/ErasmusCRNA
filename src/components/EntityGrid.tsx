@@ -10,7 +10,7 @@ interface State {
   grid: any[][];
 }
 
-export class EntityGrid extends React.Component<Props, State> {
+export class EntityGrid extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 

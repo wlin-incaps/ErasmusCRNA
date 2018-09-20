@@ -10,7 +10,7 @@ export interface Props {
   hasFonts: boolean;
 }
 
-export default class Login extends React.Component<Props> {
+export default class Login extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -42,7 +42,7 @@ export default class Login extends React.Component<Props> {
                 textStyle={styles.loginButtonText}
                 title="Login with Facebook"
                 icon={{name: 'facebook', type: 'zocial', style: styles.loginButtonIcon}}
-                onPress={() => { this.props.onFacebookClicked() }}
+                onPress={this.props.onFacebookClicked}
               />
               <Button
                 containerViewStyle={styles.loginButton}
@@ -54,7 +54,7 @@ export default class Login extends React.Component<Props> {
                 textStyle={styles.loginButtonText}
                 title="Login with Google"
                 icon={{name: 'google', type: 'zocial', style: styles.loginButtonIcon}}
-                onPress={() => { this.props.onGoogleClicked() }}
+                onPress={this.props.onGoogleClicked}
               />
               <Button
                 containerViewStyle={styles.loginButton}
@@ -66,7 +66,7 @@ export default class Login extends React.Component<Props> {
                 icon={{name: 'user', type: 'entypo', color: '#fff', style: styles.loginButtonIcon}}
                 textStyle={styles.loginButtonText}
                 title="Login"
-                onPress={() => {}}
+                onPress={this.props.onGoogleClicked}
               />
               <View style={{alignItems: 'center'}}>
                 <Text style={styles.loginLink}>Create New Account</Text>

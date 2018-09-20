@@ -20,7 +20,7 @@ interface State {
   createContent: MicroContent
 }
 
-export class HeaderAddIcon extends React.Component<Props, State> {
+export class HeaderAddIcon extends React.PureComponent<Props, State> {
   constructor (props: Props) {
     super(props);
     this.state = {

@@ -9,7 +9,11 @@ export interface Props {
 
 export function Logo(props: Props) {
   return (
-    <View>
+    <View style={{
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
       {props.hasFonts?
         <View style={{
           flexDirection: 'row'

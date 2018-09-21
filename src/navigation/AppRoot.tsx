@@ -17,7 +17,7 @@ const AppStack = createStackNavigator(
     Main: {
       screen: ConnectHome,
       navigationOptions: {
-        headerTitle: <ConnectLogo fontSize={20} />,
+        headerTitle: <ConnectLogo fontSize={26} />,
         headerLeft: <Icon name="menu" color="#fff" underlayColor={common.colors.logoBack} onPress={() => { NavigationService.toggleDrawer(); }} />,
         headerRight:
           (<View style={{ flexDirection: 'row' }}>
@@ -25,7 +25,7 @@ const AppStack = createStackNavigator(
             <HeaderAddIcon />
           </View>),
         headerStyle: { backgroundColor: common.colors.logoBack },
-        headerTitleStyle: { color: '#fff' }
+        headerTitleStyle: {}
       }
     }
   },

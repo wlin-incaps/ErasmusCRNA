@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Button, View, Text, ScrollView } from 'react-native';
+import { Button, View, Text, ScrollView, Dimensions } from 'react-native';
 import styles from '../styles/styles';
 import { EntityCarousel } from './EntityCarousel';
+import { EntityFeed } from './EntityFeed';
+import { StaggerGrid } from './StaggerGrid';
 
 export interface Props {
   onLogoutClicked: () => void;
@@ -9,11 +11,9 @@ export interface Props {
 
 export function Home(props: Props) {
   return (
-    <ScrollView style={styles.container}>
-      <EntityCarousel title='Collections'/>
-      <EntityCarousel title='People'/>
-      <EntityCarousel title='Stuff'/>
+    <View style={styles.container}>
       <Button title="Logout" onPress={props.onLogoutClicked} />
-    </ScrollView>
+      <StaggerGrid num={10000} pageSize={20} scrollBuffer={Dimensions.get('screen').height * 3} />
+    </View>
   );
 }

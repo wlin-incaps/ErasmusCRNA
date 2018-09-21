@@ -6,7 +6,7 @@ export interface Props {
   entity: any;
 }
 
-export function EntitySlide(props: Props) {
+export function EntityCard(props: Props) {
   return (
     <View style={styles.entitySlide}>
       <View style={styles.entitySlideImage}>

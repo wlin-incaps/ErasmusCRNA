@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import styles from '../styles/styles';
 import Carousel from 'react-native-snap-carousel';
-import { EntitySlide } from './EntityCard';
+import { EntityCard } from './EntityCard';
 
 export interface Props {
   title:string;
@@ -40,7 +40,7 @@ export class EntityCarousel extends React.Component<Props, State>{
 
   _renderItem(renderItem:RenderItemParam) {
     return (
-        <EntitySlide entity={renderItem.item} />
+        <EntityCard entity={renderItem.item} />
     );
   }
 

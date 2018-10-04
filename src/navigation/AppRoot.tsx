@@ -11,6 +11,7 @@ import { HeaderAddIcon } from "../components/HeaderAddIcon";
 import { WebBrowser, Font } from "expo";
 import { common } from "../styles/styles";
 import ConnectLogo from "../containers/ConnectLogo";
+import ConnectEntityDetail from "../containers/ConnectEntityDetail";
 
 const AppStack = createStackNavigator(
   {
@@ -24,8 +25,23 @@ const AppStack = createStackNavigator(
             <Icon name="open-in-browser" color="#fff" underlayColor={common.colors.logoBack} onPress={async () => { const result = await WebBrowser.openBrowserAsync('https://google.com'); }} />
             <HeaderAddIcon />
           </View>),
-        headerStyle: { backgroundColor: common.colors.logoBack },
-        headerTitleStyle: {}
+        headerStyle: { backgroundColor: common.colors.logoBack, borderBottomWidth: 3, borderBottomColor: common.colors.logoPrimary },
+        headerTitleStyle: {},
+        headerTintColor: common.colors.logoSecondary
+      }
+    },
+    Detail: {
+      screen: ConnectEntityDetail,
+      navigationOptions: {
+        headerTitle: <ConnectLogo fontSize={26} />,
+        headerRight:
+          (<View style={{ flexDirection: 'row' }}>
+            <Icon name="open-in-browser" color="#fff" underlayColor={common.colors.logoBack} onPress={async () => { const result = await WebBrowser.openBrowserAsync('https://google.com'); }} />
+            <HeaderAddIcon />
+          </View>),
+        headerStyle: { backgroundColor: common.colors.logoBack, borderBottomWidth: 3, borderBottomColor: common.colors.logoPrimary },
+        headerTitleStyle: {},
+        headerTintColor: common.colors.logoSecondary
       }
     }
   },

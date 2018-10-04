@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { View, Text, Dimensions, Image } from 'react-native';
+import { View, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
 import styles, { common } from '../styles/styles';
 import { Icon, Avatar } from 'react-native-elements';
 import utils from '../common/utils';
+import NavigationService from '../navigation/NavigationService';
 
 export interface Entity {
+  id: number;
   name?:string;
   avatar?:string;
   title?:string;
@@ -17,6 +19,7 @@ export interface Entity {
 
 export interface Props {
   item: Entity;
+  selectItem?: (itemId: number) => void;
 }
 
 export class EntityTile extends React.PureComponent<Props> {
@@ -24,18 +27,26 @@ export class EntityTile extends React.PureComponent<Props> {
   constructor(props:Props) {
     super(props);
   }
+
+  itemClicked() {
+    if(this.props.selectItem) {
+      this.props.selectItem(this.props.item.id);
+      NavigationService.navigate('Detail', {});
+    }
+  }
   
   render() {
     console.log(this.props.item.name + ' render');
     return (
-      <View style={{
+      <TouchableOpacity style={{
         width: Dimensions.get('screen').width/2 - 6,
         backgroundColor: '#fff',
         borderRadius: 5,
         margin: 3,
         paddingVertical: 12,
         paddingHorizontal: 12
-      }}>
+      }}
+      onPress={this.itemClicked.bind(this)}>
         <View style={{
           flexDirection: 'row',
           borderBottomColor: common.colors.logoPrimary,
@@ -84,7 +95,7 @@ export class EntityTile extends React.PureComponent<Props> {
         <View style={{
           alignContent: 'center',
           justifyContent: 'center',
-          backgroundColor: common.colors.logoBack,
+          backgroundColor: common.colors.logoSecondary,
           height: 150 + 50 * utils.randomIntFromInterval(0, 2),
         }}>
           {this.props.item.image?
@@ -109,7 +120,7 @@ export class EntityTile extends React.PureComponent<Props> {
             }}>{this.props.item.detail}</Text> : null
           }
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

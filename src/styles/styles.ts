@@ -6,6 +6,7 @@ export const common = {
     logoBack: 'rgb(36, 50, 64)',
     logoPrimary: 'rgb(122, 220, 187)',
     logoSecondary: 'rgb(156, 165, 174)',
+    neutralGray: 'rgb(233, 233, 239)',
     facebookBlue: '#3b5998',
     googleRed: '#dd4b39'
   },
@@ -22,7 +23,7 @@ export const common = {
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: common.colors.neutralGray
   },
   containerOffset: {
     flex: 1,
@@ -50,7 +51,7 @@ export default StyleSheet.create({
   loginTitleContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 175,
+    height: 150,
     marginTop: common.size.logoHeight/2 + 10
   },
   loginTitleBackTop: {
@@ -89,8 +90,7 @@ export default StyleSheet.create({
     color: '#fff',
     fontStyle: 'italic',
     fontFamily: common.fonts.sans,
-    fontSize: common.size.logoHeight/3,
-    paddingTop: 20
+    fontSize: common.size.logoHeight/3
   },
   loginTop: {
     flex: 1,

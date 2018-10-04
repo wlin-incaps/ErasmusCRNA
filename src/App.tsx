@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import styles from './styles/styles';
 import ConnectAppRoot from './containers/ConnectAppRoot';
+import items from './reducers/items';
 
-const rootReducer = combineReducers({auth, assets});
+const rootReducer = combineReducers({auth, assets, items});
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends React.Component {

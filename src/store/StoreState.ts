@@ -1,4 +1,5 @@
 export interface StoreState {
   auth: any,
-  assets: any
+  assets: any,
+  items: any
 }
